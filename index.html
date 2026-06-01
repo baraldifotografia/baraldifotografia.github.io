@@ -45,20 +45,32 @@
             margin-top: 25px;
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 30px;
         }
 
         .contato-header a {
             color: #FFFFFF;
             text-decoration: none;
-            font-size: 0.9em;
+            font-size: 0.95em;
             letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Espaço entre o ícone e o texto */
             border-bottom: 1px solid transparent;
-            transition: border-bottom 0.3s;
+            transition: border-bottom 0.3s, opacity 0.3s;
         }
 
         .contato-header a:hover {
             border-bottom: 1px solid #FFFFFF;
+            opacity: 0.8;
+        }
+
+        /* Estilo dos ícones de redes sociais */
+        .icone-contato {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
         }
 
         nav {
@@ -134,20 +146,49 @@
             grid-row: span 2;    
         }
 
+        /* --- NOVA SESSÃO SOBRE MIM --- */
+        .sobre-mim-wrapper {
+            background: linear-gradient(135deg, #1A1A1A 0%, #121212 100%);
+            border-top: 1px solid #222;
+            padding: 60px 0 100px 0;
+            margin-top: 60px;
+        }
+
+        .sobre-mim-wrapper .sessao-titulo {
+            margin-top: 0; /* Remove o topo extra para centralizar no novo fundo */
+        }
+
         .sobre-mim-conteudo {
-            max-width: 800px;
-            margin: 0 auto 100px auto;
+            max-width: 1000px;
+            margin: 0 auto;
             padding: 0 20px;
-            text-align: center;
+            display: flex;
+            align-items: center; /* Alinha a foto e o texto ao centro verticalmente */
+            gap: 60px; /* Espaço entre a foto e o texto */
+        }
+
+        .foto-perfil {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #333;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            flex-shrink: 0; /* Impede que a foto seja esmagada pelo texto */
+        }
+
+        .sobre-mim-texto {
+            text-align: left;
             font-size: 1.15em;
             line-height: 1.8;
             color: #CCCCCC;
         }
 
-        .sobre-mim-conteudo p {
+        .sobre-mim-texto p {
             margin-bottom: 20px;
         }
 
+        /* Responsividade geral */
         @media (max-width: 1100px) {
             .sessao-container {
                 grid-template-columns: 1fr; 
@@ -158,6 +199,19 @@
             }
         }
 
+        /* Responsividade específica para o Sobre Mim em celulares */
+        @media (max-width: 768px) {
+            .sobre-mim-conteudo {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+            .sobre-mim-texto {
+                text-align: center;
+            }
+        }
+
+        /* Pop-up (Lightbox) */
         .lightbox {
             display: none; 
             position: fixed;
@@ -202,8 +256,12 @@
         <p>Portfólio Fotográfico</p>
         
         <div class="contato-header">
-            <a href="https://www.instagram.com/baraldifoto/" target="_blank">📷 Instagram</a>
-            <a href="tel:+5511965987695">📞 (11) 96598-7695</a>
+            <a href="https://www.instagram.com/baraldifoto/" target="_blank">
+                <img src="instagram.png" class="icone-contato" alt="Instagram">
+            </a>
+            <a href="https://wa.me/5511965987695" target="_blank">
+                <img src="whatsapp.png" class="icone-contato" alt="WhatsApp"> (11) 96598-7695
+            </a>
         </div>
     </header>
 
@@ -215,10 +273,8 @@
         <a href="#sobre">Sobre Mim</a>
     </nav>
 
-    <!-- SESSÃO 1: E-commerce -->
     <h2 class="sessao-titulo" id="ecommerce">E-commerce</h2>
     <div class="sessao-container">
-        <!-- Grupo 1 -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="ecommerce1.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
             <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
@@ -227,7 +283,6 @@
             <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
             <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
         </div>
-        <!-- Grupo 2 -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="ecommerce2.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
             <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
@@ -236,7 +291,6 @@
             <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
             <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
         </div>
-        <!-- Grupo 3 -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="ecommerce3.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
             <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
@@ -247,10 +301,8 @@
         </div>
     </div>
 
-    <!-- SESSÃO 2: Retratos -->
     <h2 class="sessao-titulo" id="retratos">Retratos</h2>
     <div class="sessao-container">
-        <!-- Grupo 1: Aline -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline1_ebjo9v.jpg" alt="Retrato Aline 1" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline2_mzmed7.jpg" alt="Retrato Aline 2" onclick="abrirLightbox(this.src)">
@@ -259,7 +311,6 @@
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline5_qnihpg.jpg" alt="Retrato Aline 5" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline6_i4zsto.jpg" alt="Retrato Aline 6" onclick="abrirLightbox(this.src)">
         </div>
-        <!-- Grupo 2: BeM -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_BeM1_itzofw.jpg" alt="Retrato BeM 1" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM2_ql6dvq.jpg" alt="Retrato BeM 2" onclick="abrirLightbox(this.src)">
@@ -268,7 +319,6 @@
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM5_wonahy.jpg" alt="Retrato BeM 5" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM6_ey823l.jpg" alt="Retrato BeM 6" onclick="abrirLightbox(this.src)">
         </div>
-        <!-- Grupo 3: Bruno -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_Bruno1_ro9rpo.jpg" alt="Retrato Bruno 1" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_Bruno2_udxsob.jpg" alt="Retrato Bruno 2" onclick="abrirLightbox(this.src)">
@@ -279,10 +329,8 @@
         </div>
     </div>
 
-    <!-- SESSÃO 3: Eventos -->
     <h2 class="sessao-titulo" id="eventos">Eventos</h2>
     <div class="sessao-container">
-        <!-- Grupo 1: Emily -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/evento_Emily1_pgt9id.jpg" alt="Evento Emily 1" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily2_kbpp3h.jpg" alt="Evento Emily 2" onclick="abrirLightbox(this.src)">
@@ -291,7 +339,6 @@
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily5_sf6tkk.jpg" alt="Evento Emily 5" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily6_j9n03s.jpg" alt="Evento Emily 6" onclick="abrirLightbox(this.src)">
         </div>
-        <!-- Grupo 2: LeA -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_LeA1_nrdpb4.jpg" alt="Evento LeA 1" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_LeA2_md15jj.jpg" alt="Evento LeA 2" onclick="abrirLightbox(this.src)">
@@ -300,7 +347,6 @@
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA5_jidj98.jpg" alt="Evento LeA 5" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA6_vk4p0n.jpg" alt="Evento LeA 6" onclick="abrirLightbox(this.src)">
         </div>
-        <!-- Grupo 3: Luan -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan1_zdp6ea.jpg" alt="Evento Luan 1" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan2_zxjsza.jpg" alt="Evento Luan 2" onclick="abrirLightbox(this.src)">
@@ -311,10 +357,8 @@
         </div>
     </div>
 
-    <!-- SESSÃO 4: Artístico -->
     <h2 class="sessao-titulo" id="artistico">Artístico</h2>
     <div class="sessao-container">
-        <!-- Grupo 1: Bruna -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna1_xq8lov.jpg" alt="Artístico Bruna 1" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna2_jgq1qk.jpg" alt="Artístico Bruna 2" onclick="abrirLightbox(this.src)">
@@ -323,7 +367,6 @@
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna5_rxrccy.jpg" alt="Artístico Bruna 5" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Bruna6_tduevn.jpg" alt="Artístico Bruna 6" onclick="abrirLightbox(this.src)">
         </div>
-        <!-- Grupo 2: Luan -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan1_otiaww.jpg" alt="Artístico Luan 1" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan2_zdscyh.jpg" alt="Artístico Luan 2" onclick="abrirLightbox(this.src)">
@@ -332,7 +375,6 @@
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Luan5_nnpvbq.jpg" alt="Artístico Luan 5" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Luan6_ydnhpk.jpg" alt="Artístico Luan 6" onclick="abrirLightbox(this.src)">
         </div>
-        <!-- Grupo 3: Ragira -->
         <div class="grupo-fotos">
             <img class="foto foto-destaque" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Ragira1_btpbiv.jpg" alt="Artístico Ragira 1" onclick="abrirLightbox(this.src)">
             <img class="foto" src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Ragira2_awb9dh.jpg" alt="Artístico Ragira 2" onclick="abrirLightbox(this.src)">
@@ -343,18 +385,21 @@
         </div>
     </div>
 
-    <!-- SESSÃO 5: Sobre Mim -->
-    <h2 class="sessao-titulo" id="sobre">Sobre Mim</h2>
-    <section class="sobre-mim-conteudo">
-        <p>
-            A fotografia é a intersecção exata entre a sensibilidade técnica e a narrativa visual. Com sólida bagagem na área de comunicação e domínio técnico em processos estéticos e laboratoriais, desenvolvi um olhar atento à composição, texturas, enquadramento e ao uso expressivo da iluminação — seja explorando o contraste de uma luz cinematográfica ou o dinamismo de coberturas em tempo real.
-        </p>
-        <p>
-            Paralelamente, a atuação com a estrutura, governança e análise de dados traz para o meu fluxo de trabalho uma busca constante por precisão, simetria e organização. Este portfólio reflete essa convergência única: o equilíbrio entre o rigor técnico e a sensibilidade artística, traduzidos na força de um retrato conceitual, na agilidade da cobertura de eventos e na clareza comercial exigida pelo e-commerce.
-        </p>
-    </section>
+    <div class="sobre-mim-wrapper" id="sobre">
+        <h2 class="sessao-titulo">Sobre Mim</h2>
+        <section class="sobre-mim-conteudo">
+            <img src="perfil.jpg" alt="Baraldi" class="foto-perfil">
+            <div class="sobre-mim-texto">
+                <p>
+                    A fotografia é a intersecção exata entre a sensibilidade técnica e a narrativa visual. Com sólida bagagem na área de comunicação e domínio técnico em processos estéticos e laboratoriais, desenvolvi um olhar atento à composição, texturas, enquadramento e ao uso expressivo da iluminação — seja explorando o contraste de uma luz cinematográfica ou o dinamismo de coberturas em tempo real.
+                </p>
+                <p>
+                    Paralelamente, a atuação com a estrutura, governança e análise de dados traz para o meu fluxo de trabalho uma busca constante por precisão, simetria e organização. Este portfólio reflete essa convergência única: o equilíbrio entre o rigor técnico e a sensibilidade artística, traduzidos na força de um retrato conceitual, na agilidade da cobertura de eventos e na clareza comercial exigida pelo e-commerce.
+                </p>
+            </div>
+        </section>
+    </div>
 
-    <!-- Lightbox -->
     <div id="meuLightbox" class="lightbox">
         <span class="fechar" onclick="fecharLightbox()">&times;</span>
         <img class="lightbox-img" id="imgExpandida">
