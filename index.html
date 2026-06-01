@@ -8,36 +8,46 @@
     <style>
         body {
             margin: 0;
-            font-family: Courier;
-            background-color: #1AB7B7; /* Cor de fundo*/
+            font-family: Courier, monospace;
+            background-color: #1AB7B7; /* Sua cor de fundo mantida */
         }
         
         header {
             text-align: center;
             padding: 60px 20px;
-            background-color: #99B0B0; /* Fundo escuro para destacar as fotos depois */
+            background-color: #99B0B0; /* Fundo do cabeçalho mantido */
             color: white;
         }
 
-        /* Isso cria a grade onde as fotos vão ficar */
+        /* Estilo novo para os títulos de cada sessão */
+        .sessao-titulo {
+            text-align: center;
+            color: white; /* Cor do texto do título */
+            font-size: 2em;
+            margin-top: 60px; /* Dá um respiro entre a galeria anterior e o novo título */
+            margin-bottom: 20px;
+            text-transform: uppercase; /* Deixa tudo em maiúsculo para destacar */
+            letter-spacing: 2px;
+        }
+
+        /* Grade onde as fotos vão ficar */
         .galeria {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px; /* Espaço entre as fotos */
+            gap: 15px; 
             padding: 20px;
             max-width: 1200px;
-            margin: 0 auto; /* Centraliza a galeria na tela */
+            margin: 0 auto; 
         }
 
         .foto {
             width: 100%;
             height: 300px;
-            object-fit: cover; /* Garante que a foto preencha o quadrado sem amassar ou distorcer */
-            border-radius: 4px; /* Deixa as bordas levemente arredondadas */
-            transition: transform 0.3s; /* Prepara um efeitinho visual */
+            object-fit: cover; 
+            border-radius: 4px; 
+            transition: transform 0.3s; 
         }
 
-        /* Efeito de zoom quando passar o mouse em cima da foto */
         .foto:hover {
             transform: scale(1.03);
         }
@@ -50,13 +60,29 @@
         <p>Portfólio Fotográfico</p>
     </header>
 
+    <!-- Sessão 1: Fotografia de Retrato -->
+    <h2 class="sessao-titulo">Retratos</h2>
     <section class="galeria">
-        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+1" alt="Descrição da foto 1">
-        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+2" alt="Descrição da foto 2">
-        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+3" alt="Descrição da foto 3">
-        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+4" alt="Descrição da foto 4">
-        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+5" alt="Descrição da foto 5">
-        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+6" alt="Descrição da foto 6">
+        <!-- Substitua 'imagens/sua-foto.jpg' pelo caminho real das suas imagens -->
+        <img class="foto" src="imagens/retrato1.jpg" alt="Retrato com lente 50mm">
+        <img class="foto" src="imagens/retrato2.jpg" alt="Retrato com iluminação cinematográfica">
+        <img class="foto" src="imagens/retrato3.jpg" alt="Retrato em estilo Polaroid">
+    </section>
+
+    <!-- Sessão 2: Eventos -->
+    <h2 class="sessao-titulo">Eventos</h2>
+    <section class="galeria">
+        <img class="foto" src="imagens/evento1.jpg" alt="Fotografia de evento corporativo">
+        <img class="foto" src="imagens/evento2.jpg" alt="Cobertura de evento noturno">
+        <img class="foto" src="imagens/evento3.jpg" alt="Detalhes de decoração do evento">
+    </section>
+
+    <!-- Sessão 3: E-commerce -->
+    <h2 class="sessao-titulo">E-commerce</h2>
+    <section class="galeria">
+        <img class="foto" src="imagens/ecommerce1.jpg" alt="Fotografia de produto still">
+        <img class="foto" src="imagens/ecommerce2.jpg" alt="Produto com fundo branco">
+        <img class="foto" src="imagens/ecommerce3.jpg" alt="Detalhes de textura do produto">
     </section>
 
 </body>
