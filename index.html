@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio de Fotografia</title>
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Cor de fundo cinza bem claro */
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #1a1a1a; /* Fundo escuro para destacar as fotos depois */
+            color: white;
+        }
+
+        /* Isso cria a grade onde as fotos vão ficar */
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px; /* Espaço entre as fotos */
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto; /* Centraliza a galeria na tela */
+        }
+
+        .foto {
+            width: 100%;
+            height: 300px;
+            object-fit: cover; /* Garante que a foto preencha o quadrado sem amassar ou distorcer */
+            border-radius: 4px; /* Deixa as bordas levemente arredondadas */
+            transition: transform 0.3s; /* Prepara um efeitinho visual */
+        }
+
+        /* Efeito de zoom quando passar o mouse em cima da foto */
+        .foto:hover {
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Luiz Henrique Baraldi</h1>
+        <p>Portfólio de Fotografia</p>
+    </header>
+
+    <section class="galeria">
+        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+1" alt="Descrição da foto 1">
+        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+2" alt="Descrição da foto 2">
+        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+3" alt="Descrição da foto 3">
+        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+4" alt="Descrição da foto 4">
+        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+5" alt="Descrição da foto 5">
+        <img class="foto" src="https://via.placeholder.com/600x400?text=Foto+6" alt="Descrição da foto 6">
+    </section>
+
+</body>
+</html>
