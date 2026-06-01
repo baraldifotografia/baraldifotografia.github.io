@@ -3,59 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio de Fotografia</title>
+    <title>Baraldi Fotografia | Portfólio</title>
+    
+    <!-- Importando fontes modernas do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
     
     <style>
+        /* Rolagem suave ao clicar nos links do menu */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
-            font-family: Courier, monospace;
-            background-color: #99B0B0; 
+            /* Fonte Lato para textos gerais (limpa e moderna) */
+            font-family: 'Lato', sans-serif;
+            background-color: #121212; /* Fundo escuro sofisticado */
+            color: #E0E0E0;
         }
         
         header {
             text-align: center;
-            padding: 60px 20px;
-            background-color: #1AB7B7; 
-            color: white;
+            padding: 50px 20px 30px;
+            background-color: #0A0A0A;
+            border-bottom: 1px solid #333;
         }
 
-        /* Aumentando o tamanho do título principal */
+        /* Fonte Playfair Display para o logo (traz elegância) */
         header h1 {
+            font-family: 'Playfair Display', serif;
             font-size: 3.5em; 
             margin: 0; 
-            margin-bottom: 10px; 
+            font-weight: 400;
+            color: #FFFFFF;
+        }
+
+        header p {
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #A0A0A0;
+            margin-top: 10px;
+        }
+
+        /* Área de Contato no Cabeçalho */
+        .contato-header {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .contato-header a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border-bottom: 1px solid transparent;
+            transition: border-bottom 0.3s;
+        }
+
+        .contato-header a:hover {
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        /* Menu de Navegação (Categorias) */
+        nav {
+            background-color: #1A1A1A;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        nav a {
+            color: #CCCCCC;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 1.5px;
+            padding: 5px 10px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #FFFFFF;
         }
 
         /* Estilo dos títulos de cada sessão */
         .sessao-titulo {
             text-align: center;
-            color: white; 
-            font-size: 2em;
-            margin-top: 60px; 
-            margin-bottom: 20px;
-            letter-spacing: 2px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            font-weight: 400;
+            margin-top: 80px; 
+            margin-bottom: 30px;
+            color: #FFFFFF;
         }
 
         /* Grade onde as fotos vão ficar */
         .galeria {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px; 
-            padding: 20px;
+            gap: 20px; 
+            padding: 0 20px 60px 20px;
             max-width: 1200px;
             margin: 0 auto; 
         }
 
+        /* Estilo das Fotos e interatividade */
         .foto {
             width: 100%;
-            height: 300px;
+            height: 350px;
             object-fit: cover; 
-            border-radius: 4px; 
-            transition: transform 0.3s; 
+            border-radius: 2px; 
+            cursor: pointer; /* Muda o mouse para uma "mãozinha" indicando que é clicável */
+            transition: transform 0.4s ease, filter 0.4s ease;
+            filter: grayscale(20%); /* Deixa a galeria levemente mais sóbria */
         }
 
         .foto:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
+            filter: grayscale(0%); /* Revela as cores originais ao passar o mouse */
+        }
+
+        /* --- ESTILOS DO POP-UP (LIGHTBOX) --- */
+        .lightbox {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95); /* Fundo preto quase sólido */
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 85%;
+            object-fit: contain;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .fechar {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: #FFFFFF;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .fechar:hover {
+            color: #A0A0A0;
         }
     </style>
 </head>
@@ -64,39 +174,81 @@
     <header>
         <h1>Baraldi Fotografia</h1>
         <p>Portfólio Fotográfico</p>
+        
+        <!-- Contatos no Cabeçalho -->
+        <div class="contato-header">
+            <!-- Coloque o link real do seu instagram no href -->
+            <a href="https://instagram.com/seuusuario" target="_blank">📷 Instagram</a>
+            <!-- Coloque seu número com DDI e DDD para o clique abrir o discador/WhatsApp -->
+            <a href="tel:+5511999999999">📞 (11) 99999-9999</a>
+        </div>
     </header>
 
+    <!-- Menu Fixo com as Categorias -->
+    <nav>
+        <a href="#retratos">Retratos</a>
+        <a href="#eventos">Eventos</a>
+        <a href="#ecommerce">E-commerce</a>
+        <a href="#artistico">Artístico</a>
+    </nav>
+
     <!-- Sessão 1: Fotografia de Retrato -->
-    <h2 class="sessao-titulo">Retratos</h2>
+    <h2 class="sessao-titulo" id="retratos">Retratos</h2>
     <section class="galeria">
-        <img class="foto" src="imagens/retrato1.JPG" alt="Aline">
-        <img class="foto" src="imagens/retrato2.jpg" alt="Cristina">
-        <img class="foto" src="imagens/retrato3.jpg" alt="Bruno">
+        <img class="foto" src="imagens/retrato1.jpg" alt="Retrato com lente 50mm" onclick="abrirLightbox(this.src)">
+        <img class="foto" src="imagens/retrato2.jpg" alt="Retrato com foco no olhar" onclick="abrirLightbox(this.src)">
+        <img class="foto" src="imagens/retrato3.jpg" alt="Retrato em ambiente externo" onclick="abrirLightbox(this.src)">
     </section>
 
     <!-- Sessão 2: Eventos -->
-    <h2 class="sessao-titulo">Eventos</h2>
+    <h2 class="sessao-titulo" id="eventos">Eventos</h2>
     <section class="galeria">
-        <img class="foto" src="imagens/evento1.jpg" alt="Lucas e Aline">
-        <img class="foto" src="imagens/evento2.jpg" alt="Luan">
-        <img class="foto" src="imagens/evento3.jpg" alt="Emily">
+        <img class="foto" src="imagens/evento1.jpg" alt="Fotografia de evento corporativo" onclick="abrirLightbox(this.src)">
+        <img class="foto" src="imagens/evento2.jpg" alt="Cobertura de evento noturno" onclick="abrirLightbox(this.src)">
+        <img class="foto" src="imagens/evento3.jpg" alt="Detalhes de decoração do evento" onclick="abrirLightbox(this.src)">
     </section>
 
     <!-- Sessão 3: E-commerce -->
-    <h2 class="sessao-titulo">E-commerce</h2>
+    <h2 class="sessao-titulo" id="ecommerce">E-commerce</h2>
     <section class="galeria">
-        <img class="foto" src="imagens/ecommerce1.jpg" alt="Fotografia de produto still">
-        <img class="foto" src="imagens/ecommerce2.jpg" alt="Produto com fundo branco">
-        <img class="foto" src="imagens/ecommerce3.jpg" alt="Detalhes de textura do produto">
+        <img class="foto" src="imagens/ecommerce1.jpg" alt="Fotografia de produto still" onclick="abrirLightbox(this.src)">
+        <img class="foto" src="imagens/ecommerce2.jpg" alt="Produto com fundo branco" onclick="abrirLightbox(this.src)">
+        <img class="foto" src="imagens/ecommerce3.jpg" alt="Detalhes de textura do produto" onclick="abrirLightbox(this.src)">
     </section>
 
     <!-- Sessão 4: Artístico -->
-    <h2 class="sessao-titulo">Artístico</h2>
+    <h2 class="sessao-titulo" id="artistico">Artístico</h2>
     <section class="galeria">
-        <img class="foto" src="imagens/artistico1.jpg" alt="Luan">
-        <img class="foto" src="imagens/artistico2.jpg" alt="Ragira">
-        <img class="foto" src="imagens/artistico3.jpg" alt="Bruna">
+        <img class="foto" src="imagens/artistico1.jpg" alt="Projeto autoral com iluminação cinematográfica" onclick="abrirLightbox(this.src)">
+        <img class="foto" src="imagens/artistico2.jpg" alt="Composição estética em estilo Polaroid" onclick="abrirLightbox(this.src)">
+        <img class="foto" src="imagens/artistico3.jpg" alt="Estudo de sombras com theatre light" onclick="abrirLightbox(this.src)">
     </section>
 
+    <!-- Estrutura do Pop-up (Lightbox) oculta no fundo do site -->
+    <div id="meuLightbox" class="lightbox">
+        <span class="fechar" onclick="fecharLightbox()">&times;</span>
+        <img class="lightbox-img" id="imgExpandida">
+    </div>
+
+    <!-- Scripts de interatividade -->
+    <script>
+        // Função para pegar a imagem clicada e abrir no pop-up
+        function abrirLightbox(caminhoDaImagem) {
+            document.getElementById("meuLightbox").style.display = "flex";
+            document.getElementById("imgExpandida").src = caminhoDaImagem;
+        }
+
+        // Função para fechar o pop-up
+        function fecharLightbox() {
+            document.getElementById("meuLightbox").style.display = "none";
+        }
+
+        // Fecha o pop-up se o usuário clicar fora da imagem
+        document.getElementById("meuLightbox").addEventListener("click", function(evento) {
+            if (evento.target === this) {
+                fecharLightbox();
+            }
+        });
+    </script>
 </body>
 </html>
