@@ -22,8 +22,8 @@
         header {
             text-align: center;
             padding: 50px 20px 30px;
-            background-color: #03989E; /* Nova cor solicitada */
-            border-bottom: 1px solid #027a7e; /* Tom mais escuro para a borda */
+            background-color: #03989E; 
+            border-bottom: 1px solid #027a7e; 
         }
 
         header h1 {
@@ -37,7 +37,7 @@
         header p {
             font-weight: 300;
             letter-spacing: 2px;
-            color: #E0F7FA; /* Ajustado para um tom claro que combine com o fundo #03989E */
+            color: #E0F7FA; 
             margin-top: 10px;
         }
 
@@ -90,17 +90,18 @@
         }
 
         nav a:hover {
-            color: #03989E; /* Hover do menu com a cor principal */
+            color: #03989E; 
         }
 
         .sessao-titulo {
-            text-align: center;
+            text-align: left; 
             font-family: 'Playfair Display', serif;
             font-size: 2.2em;
             font-weight: 400;
-            margin-top: 80px; 
-            margin-bottom: 30px;
-            color: #03989E; /* Títulos das sessões com a cor principal */
+            margin: 80px auto 30px auto; 
+            max-width: 1500px; 
+            padding: 0 20px; 
+            color: #03989E; 
         }
 
         .sessao-container {
@@ -126,7 +127,7 @@
             border-radius: 2px; 
             cursor: pointer; 
             transition: transform 0.4s ease, filter 0.4s ease;
-            filter: grayscale(15%); 
+            filter: grayscale(85%); /* Quase sem cor antes do hover */
         }
 
         .foto:hover {
@@ -139,7 +140,7 @@
             grid-row: span 2;    
         }
 
-        /* --- NOVA SESSÃO SOBRE MIM --- */
+        /* --- SESSÃO SOBRE MIM --- */
         .sobre-mim-wrapper {
             background: linear-gradient(135deg, #1A1A1A 0%, #121212 100%);
             border-top: 1px solid #222;
@@ -161,7 +162,7 @@
             height: 280px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #03989E; /* Borda da foto com a cor principal */
+            border: 3px solid #03989E; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             flex-shrink: 0; 
         }
@@ -173,11 +174,12 @@
             color: #CCCCCC;
         }
 
-        /* Alinhamento específico do título dentro do bloco de texto */
         .sobre-mim-texto .sessao-titulo {
             text-align: left;
             margin-top: 0;
             margin-bottom: 20px;
+            padding: 0;
+            max-width: none;
         }
 
         .sobre-mim-texto p {
@@ -241,7 +243,7 @@
         }
 
         .fechar:hover {
-            color: #03989E; /* Hover do botão de fechar com a cor principal */
+            color: #03989E; 
         }
     </style>
 </head>
@@ -258,46 +260,14 @@
     </header>
 
     <nav>
-        <a href="#ecommerce">E-commerce</a>
         <a href="#retratos">Retratos</a>
         <a href="#eventos">Eventos</a>
         <a href="#artistico">Artístico</a>
+        <a href="#ecommerce">E-commerce</a>
         <a href="#sobre">Sobre Mim</a>
     </nav>
 
-    <!-- SESSÃO 1: E-commerce -->
-    <h2 class="sessao-titulo" id="ecommerce">E-commerce</h2>
-    <div class="sessao-container">
-        <!-- Grupo 1 -->
-        <div class="grupo-fotos">
-            <img class="foto foto-destaque" src="ecommerce1.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        </div>
-        <!-- Grupo 2 -->
-        <div class="grupo-fotos">
-            <img class="foto foto-destaque" src="ecommerce2.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        </div>
-        <!-- Grupo 3 -->
-        <div class="grupo-fotos">
-            <img class="foto foto-destaque" src="ecommerce3.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        </div>
-    </div>
-
-    <!-- SESSÃO 2: Retratos -->
+    <!-- SESSÃO 1: Retratos -->
     <h2 class="sessao-titulo" id="retratos">Retratos</h2>
     <div class="sessao-container">
         <!-- Grupo 1: Aline -->
@@ -329,7 +299,7 @@
         </div>
     </div>
 
-    <!-- SESSÃO 3: Eventos -->
+    <!-- SESSÃO 2: Eventos -->
     <h2 class="sessao-titulo" id="eventos">Eventos</h2>
     <div class="sessao-container">
         <!-- Grupo 1: Emily -->
@@ -361,7 +331,7 @@
         </div>
     </div>
 
-    <!-- SESSÃO 4: Artístico -->
+    <!-- SESSÃO 3: Artístico -->
     <h2 class="sessao-titulo" id="artistico">Artístico</h2>
     <div class="sessao-container">
         <!-- Grupo 1: Bruna -->
@@ -393,7 +363,39 @@
         </div>
     </div>
 
-    <!-- SESSÃO 5: Sobre Mim com Novo Layout Fluido -->
+    <!-- SESSÃO 4: E-commerce -->
+    <h2 class="sessao-titulo" id="ecommerce">E-commerce</h2>
+    <div class="sessao-container">
+        <!-- Grupo 1 -->
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="ecommerce1.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+        </div>
+        <!-- Grupo 2 -->
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="ecommerce2.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+        </div>
+        <!-- Grupo 3 -->
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="ecommerce3.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+        </div>
+    </div>
+
+    <!-- SESSÃO 5: Sobre Mim -->
     <div class="sobre-mim-wrapper" id="sobre">
         <section class="sobre-mim-conteudo">
             <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780353269/perfil_nfmer5.jpg" alt="Baraldi" class="foto-perfil">
