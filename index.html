@@ -98,15 +98,22 @@
             color: #FFFFFF;
         }
 
-        /* --- NOVO LAYOUT DE GRID ASSIMÉTRICO --- */
+        /* CONTAINER PARA COLOCAR OS 3 GRUPOS NA MESMA LINHA */
+        .sessao-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais lado a lado */
+            gap: 25px;
+            max-width: 1500px;
+            margin: 0 auto 40px auto;
+            padding: 0 20px;
+        }
+
+        /* CADA GRUPO INDIVIDUAL (CONTÉM 6 FOTOS) */
         .grupo-fotos {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 colunas de tamanhos iguais */
-            grid-auto-rows: 250px; /* Altura padrão para as fotos menores */
-            gap: 15px;
-            max-width: 1200px;
-            margin: 0 auto 50px auto; /* Centraliza e dá espaço entre os grupos */
-            padding: 0 20px;
+            grid-template-columns: repeat(3, 1fr); 
+            grid-auto-rows: 110px; /* Altura ajustada menor para caberem os 3 grupos lado a lado elegantemente */
+            gap: 10px;
         }
 
         .foto {
@@ -116,41 +123,47 @@
             border-radius: 2px; 
             cursor: pointer; 
             transition: transform 0.4s ease, filter 0.4s ease;
-            filter: grayscale(20%); 
+            filter: grayscale(15%); 
         }
 
         .foto:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
             filter: grayscale(0%); 
         }
 
-        /* Foto maior do canto superior esquerdo */
+        /* Padrão assimétrico: primeira foto maior no canto superior esquerdo */
         .foto-destaque {
-            grid-column: span 2; /* Ocupa 2 colunas de largura */
-            grid-row: span 2;    /* Ocupa 2 linhas de altura */
+            grid-column: span 2; 
+            grid-row: span 2;    
         }
 
-        /* Responsividade para Tablets */
-        @media (max-width: 768px) {
+        /* ESTILO DA SESSÃO SOBRE MIM */
+        .sobre-mim-conteudo {
+            max-width: 800px;
+            margin: 0 auto 100px auto;
+            padding: 0 20px;
+            text-align: center;
+            font-size: 1.15em;
+            line-height: 1.8;
+            color: #CCCCCC;
+        }
+
+        .sobre-mim-conteudo p {
+            margin-bottom: 20px;
+        }
+
+        /* Responsividade para telas menores (Tablets e Celulares) */
+        @media (max-width: 1100px) {
+            .sessao-container {
+                grid-template-columns: 1fr; /* Empilha os grupos verticalmente se a tela for pequena */
+                gap: 50px;
+            }
             .grupo-fotos {
-                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 180px; /* Aumenta o tamanho em telas menores para melhor visualização */
             }
         }
 
-        /* Responsividade para Celulares */
-        @media (max-width: 480px) {
-            .grupo-fotos {
-                grid-template-columns: 1fr;
-                grid-auto-rows: 250px;
-            }
-            .foto-destaque {
-                grid-column: span 1;
-                grid-row: span 1;
-                height: 350px;
-            }
-        }
-
-        /* --- ESTILOS DO POP-UP (LIGHTBOX) --- */
+        /* Pop-up (Lightbox) */
         .lightbox {
             display: none; 
             position: fixed;
@@ -205,32 +218,151 @@
         <a href="#retratos">Retratos</a>
         <a href="#eventos">Eventos</a>
         <a href="#artistico">Artístico</a>
+        <a href="#sobre">Sobre Mim</a>
     </nav>
 
     <h2 class="sessao-titulo" id="ecommerce">E-commerce</h2>
-    <div class="grupo-fotos">
-        <img class="foto foto-destaque" src="imagens/ecommerce1.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-    </div>
-    <div class="grupo-fotos">
-        <img class="foto foto-destaque" src="imagens/ecommerce-extra4.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra5.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra6.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra7.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra8.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra9.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-    </div>
-    <div class="grupo-fotos">
-        <img class="foto foto-destaque" src="imagens/ecommerce-extra10.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra11.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra12.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra13.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra14.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
-        <img class="foto" src="imagens/ecommerce-extra15.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+    <div class="sessao-container">
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/ecommerce1.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+        </div>
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/ecommerce2.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+        </div>
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/ecommerce3.jpg" alt="Destaque E-commerce" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce3.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce2.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/ecommerce1.jpg" alt="Produto" onclick="abrirLightbox(this.src)">
+        </div>
     </div>
 
-    <h2 class="sessao-titulo" id="retratos">
+    <h2 class="sessao-titulo" id="retratos">Retratos</h2>
+    <div class="sessao-container">
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/retrato1.JPG" alt="Aline" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato2.jpg" alt="Cristina" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato3.jpg" alt="Bruno" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato1.JPG" alt="Aline" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato2.jpg" alt="Cristina" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato3.jpg" alt="Bruno" onclick="abrirLightbox(this.src)">
+        </div>
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/retrato2.jpg" alt="Cristina" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato1.JPG" alt="Aline" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato3.jpg" alt="Bruno" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato2.jpg" alt="Cristina" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato1.JPG" alt="Aline" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato3.jpg" alt="Bruno" onclick="abrirLightbox(this.src)">
+        </div>
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/retrato3.jpg" alt="Bruno" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato1.JPG" alt="Aline" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato2.jpg" alt="Cristina" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato3.jpg" alt="Bruno" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato1.JPG" alt="Aline" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/retrato2.jpg" alt="Cristina" onclick="abrirLightbox(this.src)">
+        </div>
+    </div>
+
+    <h2 class="sessao-titulo" id="eventos">Eventos</h2>
+    <div class="sessao-container">
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/evento1.jpg" alt="Casamento" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento2.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento3.jpg" alt="Emily" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento1.jpg" alt="Casamento" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento2.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento3.jpg" alt="Emily" onclick="abrirLightbox(this.src)">
+        </div>
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/evento2.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento1.jpg" alt="Casamento" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento3.jpg" alt="Emily" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento2.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento1.jpg" alt="Casamento" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento3.jpg" alt="Emily" onclick="abrirLightbox(this.src)">
+        </div>
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/evento3.jpg" alt="Emily" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento1.jpg" alt="Casamento" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento2.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento3.jpg" alt="Emily" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento1.jpg" alt="Casamento" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/evento2.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+        </div>
+    </div>
+
+    <h2 class="sessao-titulo" id="artistico">Artístico</h2>
+    <div class="sessao-container">
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/artistico1.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico2.jpg" alt="Rigira" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico3.jpg" alt="Bruna" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico1.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico2.jpg" alt="Rigira" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico3.jpg" alt="Bruna" onclick="abrirLightbox(this.src)">
+        </div>
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/artistico2.jpg" alt="Rigira" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico1.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico3.jpg" alt="Bruna" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico2.jpg" alt="Rigira" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico1.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico3.jpg" alt="Bruna" onclick="abrirLightbox(this.src)">
+        </div>
+        <div class="grupo-fotos">
+            <img class="foto foto-destaque" src="imagens/artistico3.jpg" alt="Bruna" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico1.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico2.jpg" alt="Rigira" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico3.jpg" alt="Bruna" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico1.jpg" alt="Luan" onclick="abrirLightbox(this.src)">
+            <img class="foto" src="imagens/artistico2.jpg" alt="Rigira" onclick="abrirLightbox(this.src)">
+        </div>
+    </div>
+
+    <h2 class="sessao-titulo" id="sobre">Sobre Mim</h2>
+    <section class="sobre-mim-conteudo">
+        <p>
+            A fotografia é a intersecção exata entre a sensibilidade técnica e a narrativa visual. Com sólida bagagem na área de comunicação e domínio técnico em processos estéticos e laboratoriais, desenvolvi um olhar atento à composição, texturas, enquadramento e ao uso expressivo da iluminação — seja explorando o contraste de uma luz cinematográfica ou o dinamismo de coberturas em tempo real.
+        </p>
+        <p>
+            Paralelamente, a atuação com a estrutura, governança e análise de dados traz para o meu fluxo de trabalho uma busca constante por precisão, simetria e organização. Este portfólio reflete essa convergência única: o equilíbrio entre o rigor técnico e a sensibilidade artística, traduzidos na força de um retrato conceitual, na agilidade da cobertura de eventos e na clareza comercial exigida pelo e-commerce.
+        </p>
+    </section>
+
+    <div id="meuLightbox" class="lightbox">
+        <span class="fechar" onclick="fecharLightbox()">&times;</span>
+        <img class="lightbox-img" id="imgExpandida">
+    </div>
+
+    <script>
+        function abrirLightbox(caminhoDaImagem) {
+            document.getElementById("meuLightbox").style.display = "flex";
+            document.getElementById("imgExpandida").src = caminhoDaImagem;
+        }
+
+        function fecharLightbox() {
+            document.getElementById("meuLightbox").style.display = "none";
+        }
+
+        document.getElementById("meuLightbox").addEventListener("click", function(evento) {
+            if (evento.target === this) {
+                fecharLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
