@@ -9,25 +9,32 @@
         body {
             margin: 0;
             font-family: Courier, monospace;
-            background-color: #1AB7B7; /* Sua cor de fundo mantida */
+            background-color: #99B0B0; /* Cor de fundo agora invertida (era do cabeçalho) */
         }
         
         header {
             text-align: center;
             padding: 60px 20px;
-            background-color: #99B0B0; /* Fundo do cabeçalho mantido */
+            background-color: #1AB7B7; /* Fundo do cabeçalho invertido (era do corpo) */
             color: white;
         }
 
-        /* Estilo novo para os títulos de cada sessão */
+        /* Aumentando o tamanho do título principal */
+        header h1 {
+            font-size: 3.5em; /* Controla o tamanho do "Baraldi Fotografia" */
+            margin: 0; 
+            margin-bottom: 10px; /* Dá um pequeno espaço entre o título e o subtítulo */
+        }
+
+        /* Estilo dos títulos de cada sessão */
         .sessao-titulo {
             text-align: center;
-            color: white; /* Cor do texto do título */
+            color: white; 
             font-size: 2em;
-            margin-top: 60px; /* Dá um respiro entre a galeria anterior e o novo título */
+            margin-top: 60px; 
             margin-bottom: 20px;
-            text-transform: uppercase; /* Deixa tudo em maiúsculo para destacar */
             letter-spacing: 2px;
+            /* O comando que forçava a caixa alta foi removido daqui */
         }
 
         /* Grade onde as fotos vão ficar */
@@ -63,7 +70,6 @@
     <!-- Sessão 1: Fotografia de Retrato -->
     <h2 class="sessao-titulo">Retratos</h2>
     <section class="galeria">
-        <!-- Substitua 'imagens/sua-foto.jpg' pelo caminho real das suas imagens -->
         <img class="foto" src="imagens/retrato1.jpg" alt="Retrato com lente 50mm">
         <img class="foto" src="imagens/retrato2.jpg" alt="Retrato com iluminação cinematográfica">
         <img class="foto" src="imagens/retrato3.jpg" alt="Retrato em estilo Polaroid">
