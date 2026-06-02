@@ -1,4 +1,3 @@
-<script>
         // --- 1. NAVEGAÇÃO DE ABAS ---
         function abrirAba(idAba, linkClicado) {
             document.querySelectorAll('.aba-conteudo').forEach(aba => {
@@ -162,4 +161,3 @@
                 observador.observe(elemento);
             });
         });
-    </script>
