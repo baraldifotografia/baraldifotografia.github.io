@@ -357,8 +357,28 @@
             cursor: pointer;
             transition: color 0.3s;
         }
+        
+        /* --- EFEITO DE REVELAÇÃO NO SCROLL --- */
+        .elemento-oculto {
+            opacity: 0;
+            transform: translateY(40px); /* Começa 40px mais para baixo */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
 
+        .elemento-mostrar {
+            opacity: 1;
+            transform: translateY(0); /* Volta para a posição original */
+        }
+        
+        /* Atraso em cascata para as fotos em linha (efeito dominó) */
+        .linha-6-fotos img:nth-child(1) { transition-delay: 0.1s; }
+        .linha-6-fotos img:nth-child(2) { transition-delay: 0.2s; }
+        .linha-6-fotos img:nth-child(3) { transition-delay: 0.3s; }
+        .linha-6-fotos img:nth-child(4) { transition-delay: 0.4s; }
+        .linha-6-fotos img:nth-child(5) { transition-delay: 0.5s; }
+        .linha-6-fotos img:nth-child(6) { transition-delay: 0.6s; }
         .fechar:hover { color: #A0A0A0; }
+        
     </style>
 </head>
 <body>
@@ -704,6 +724,31 @@
             if (evento.target === this) {
                 fecharLightbox();
             }
+        });
+        // --- OBSERVAÇÃO DE SCROLL PARA ANIMAÇÕES (Intersection Observer) ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cria o observador
+            const observador = new IntersectionObserver((entradas) => {
+                entradas.forEach((entrada) => {
+                    // Se o elemento entrou na tela
+                    if (entrada.isIntersecting) {
+                        entrada.target.classList.add('elemento-mostrar');
+                        // Para de observar depois que já apareceu (opcional)
+                        observador.unobserve(entrada.target); 
+                    }
+                });
+            }, { 
+                threshold: 0.15 // Dispara quando 15% do elemento estiver visível
+            });
+
+            // Seleciona tudo que queremos animar (capas, fotos individuais, textos e botões)
+            const elementosParaAnimar = document.querySelectorAll('.cartao-ensaio, .linha-6-fotos img, .sobre-mim-conteudo, .btn-contato, .sequencia-home img');
+
+            // Adiciona a classe 'oculto' e manda o observador vigiar cada um
+            elementosParaAnimar.forEach((elemento) => {
+                elemento.classList.add('elemento-oculto');
+                observador.observe(elemento);
+            });
         });
     </script>
 </body>
