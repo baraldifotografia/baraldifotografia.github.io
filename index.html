@@ -81,14 +81,6 @@
             object-fit: contain;
         }
 
-        .logo-texto-fallback {
-            font-family: 'Playfair Display', serif;
-            font-size: 2em;
-            color: #FFF;
-            margin: 0;
-            line-height: 1;
-        }
-
         /* --- SISTEMA DE ABAS --- */
         .aba-conteudo {
             display: none; 
@@ -96,6 +88,12 @@
             max-width: 1500px;
             margin: 0 auto;
             animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* A aba Home não terá padding para o slider colar nas bordas */
+        #aba-home {
+            padding: 0;
+            max-width: 100%;
         }
 
         .aba-conteudo.ativa {
@@ -117,34 +115,91 @@
             color: #FFFFFF;
         }
 
-        /* --- ABA HOME (SEQUÊNCIA EM GRADE) --- */
-        .sequencia-home {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
-            gap: 0; /* Sem margem entre elas */
-            max-width: 1200px;
-            margin: 0 auto;
+        /* --- NOVO SLIDER DA HOME --- */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 122px); /* Ocupa a tela toda menos o cabeçalho */
+            overflow: hidden;
+            background-color: #000;
         }
-        
-        .sequencia-home img {
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            min-height: 400px;
-            object-fit: cover; /* Garante que a foto não distorça */
-            display: block;
-            border-radius: 0; /* Bordas retas para grudarem perfeitamente */
-            filter: grayscale(10%);
-            transition: filter 0.4s ease;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .sequencia-home img:hover {
-            filter: grayscale(0%);
+        .slide.ativa {
+            opacity: 1;
+            z-index: 10;
         }
 
-        /* Se tiver um número ímpar de fotos, a última ocupa as duas colunas */
-        .sequencia-home img:last-child:nth-child(odd) {
-            grid-column: span 2;
-            min-height: 500px; /* Deixa a foto destaque um pouco maior */
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(15%);
+        }
+
+        /* Setas do Slider */
+        .seta-slider {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.4);
+            color: #FFF;
+            border: none;
+            font-size: 2rem;
+            padding: 15px 20px;
+            cursor: pointer;
+            z-index: 20;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+        }
+
+        .seta-slider:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .seta-slider.esquerda { left: 20px; }
+        .seta-slider.direita { right: 20px; }
+
+        /* Indicadores (Dots) do Slider */
+        .dots-container {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .dot:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .dot.ativo {
+            background-color: #FFF;
+            transform: scale(1.3);
         }
 
         /* --- ABA PORTFÓLIO (CAPAS) --- */
@@ -318,11 +373,8 @@
             .nav-container { flex-direction: column; gap: 15px; }
             .nav-esquerda, .nav-direita { justify-content: center; width: 100%; }
             .logo-centro img { height: 60px; }
+            .slider-container { height: 60vh; }
             
-            /* No celular a home volta a ser 1 por linha para a foto não ficar pequena */
-            .sequencia-home { grid-template-columns: 1fr; }
-            .sequencia-home img:last-child:nth-child(odd) { grid-column: span 1; }
-
             .sobre-mim-conteudo {
                 flex-direction: column;
                 text-align: center;
@@ -335,7 +387,7 @@
             }
         }
 
-        /* --- LIGHTBOX (POP-UP) --- */
+        /* --- LIGHTBOX (POP-UP) ATUALIZADO --- */
         .lightbox {
             display: none; 
             position: fixed;
@@ -347,14 +399,23 @@
             background-color: rgba(0, 0, 0, 0.95); 
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+        }
+
+        .lightbox-conteudo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
         }
 
         .lightbox-img {
-            max-width: 90%;
-            max-height: 85%;
+            max-width: 85%;
+            max-height: 85vh;
             object-fit: contain;
             box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            transition: opacity 0.3s ease;
         }
 
         .fechar {
@@ -366,9 +427,28 @@
             font-weight: bold;
             cursor: pointer;
             transition: color 0.3s;
+            z-index: 1001;
         }
         
         .fechar:hover { color: #A0A0A0; }
+
+        .seta-lightbox {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            color: white;
+            border: none;
+            font-size: 3rem;
+            cursor: pointer;
+            padding: 20px;
+            transition: color 0.3s;
+            z-index: 1000;
+        }
+
+        .seta-lightbox:hover { color: #888; }
+        .seta-lightbox.esquerda { left: 2%; }
+        .seta-lightbox.direita { right: 2%; }
 
         /* --- EFEITO DE REVELAÇÃO NO SCROLL --- */
         .elemento-oculto {
@@ -416,15 +496,28 @@
         </nav>
     </header>
 
-    <!-- ABA 1: HOME (Sequência de Fotos em Grade) -->
+    <!-- ABA 1: HOME (SLIDER) -->
     <main id="aba-home" class="aba-conteudo ativa">
-        <div class="sequencia-home">
-            <!-- Substitua pelas fotos preferidas da sua sequência -->
-            <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/q_auto/f_auto/v1780366829/Brunin_-_2_swnyeg.png" alt="Destaque 1">
-            <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline1_ebjo9v.jpg" alt="Destaque 2">
-            <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_LeA2_md15jj.jpg" alt="Destaque 3">
-            <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan1_otiaww.jpg" alt="Destaque 4">
-            <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna4_sjxyw7.jpg" alt="Destaque 5">
+        <div class="slider-container">
+            <!-- Slides -->
+            <div class="slide ativa"><img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/q_auto/f_auto/v1780366829/Brunin_-_2_swnyeg.png" alt="Destaque 1"></div>
+            <div class="slide"><img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline1_ebjo9v.jpg" alt="Destaque 2"></div>
+            <div class="slide"><img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_LeA2_md15jj.jpg" alt="Destaque 3"></div>
+            <div class="slide"><img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan1_otiaww.jpg" alt="Destaque 4"></div>
+            <div class="slide"><img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna4_sjxyw7.jpg" alt="Destaque 5"></div>
+
+            <!-- Controles do Slider -->
+            <button class="seta-slider esquerda" onclick="mudarSlide(-1)">&#10094;</button>
+            <button class="seta-slider direita" onclick="mudarSlide(1)">&#10095;</button>
+
+            <!-- Indicadores (Dots) -->
+            <div class="dots-container">
+                <span class="dot ativo" onclick="irParaSlide(0)"></span>
+                <span class="dot" onclick="irParaSlide(1)"></span>
+                <span class="dot" onclick="irParaSlide(2)"></span>
+                <span class="dot" onclick="irParaSlide(3)"></span>
+                <span class="dot" onclick="irParaSlide(4)"></span>
+            </div>
         </div>
     </main>
 
@@ -523,36 +616,36 @@
         <div id="ensaio-aline" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Ensaio: Aline</h3>
             <div class="linha-6-fotos">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline1_ebjo9v.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline2_mzmed7.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline3_slkqv1.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline4_ivmquc.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline5_qnihpg.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline6_i4zsto.jpg" onclick="abrirLightbox(this.src)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline1_ebjo9v.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline2_mzmed7.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline3_slkqv1.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline4_ivmquc.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline5_qnihpg.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_Aline6_i4zsto.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
 
         <div id="ensaio-bem" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Ensaio: Baraldi & Matias</h3>
             <div class="linha-6-fotos">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_BeM1_itzofw.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM2_ql6dvq.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM3_cfsolr.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM4_tctqhu.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM5_wonahy.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM6_ey823l.jpg" onclick="abrirLightbox(this.src)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/retrato_BeM1_itzofw.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM2_ql6dvq.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM3_cfsolr.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM4_tctqhu.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM5_wonahy.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_BeM6_ey823l.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
 
         <div id="ensaio-bruno" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Ensaio: Bruno</h3>
             <div class="linha-6-fotos">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_Bruno1_ro9rpo.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_Bruno2_udxsob.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351128/retrato_Bruno3_v6qxpa.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351128/retrato_Bruno4_n0w9bt.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351128/retrato_Bruno5_dcxxjs.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351128/retrato_Bruno6_ipydom.jpg" onclick="abrirLightbox(this.src)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_Bruno1_ro9rpo.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351127/retrato_Bruno2_udxsob.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351128/retrato_Bruno3_v6qxpa.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351128/retrato_Bruno4_n0w9bt.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351128/retrato_Bruno5_dcxxjs.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351128/retrato_Bruno6_ipydom.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
     </main>
@@ -565,36 +658,36 @@
         <div id="ensaio-emily" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Evento: Aniversário</h3>
             <div class="linha-6-fotos">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/evento_Emily1_pgt9id.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily2_kbpp3h.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/evento_Emily3_qhqqlr.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily4_hbzfzh.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily5_sf6tkk.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily6_j9n03s.jpg" onclick="abrirLightbox(this.src)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/evento_Emily1_pgt9id.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily2_kbpp3h.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/evento_Emily3_qhqqlr.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily4_hbzfzh.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily5_sf6tkk.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_Emily6_j9n03s.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
 
         <div id="ensaio-lea" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Evento: Casamento</h3>
             <div class="linha-6-fotos">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_LeA1_nrdpb4.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_LeA2_md15jj.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA3_yc4zoo.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA4_wlxo9g.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA5_jidj98.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA6_vk4p0n.jpg" onclick="abrirLightbox(this.src)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_LeA1_nrdpb4.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351124/evento_LeA2_md15jj.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA3_yc4zoo.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA4_wlxo9g.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA5_jidj98.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_LeA6_vk4p0n.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
 
         <div id="ensaio-luan-evento" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Evento: Saída de 1 Ano</h3>
             <div class="linha-6-fotos">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan1_zdp6ea.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan2_zxjsza.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan3_lv9n5g.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan4_mjgxnc.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan5_ceo66g.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/evento_Luan6_lhxoxb.jpg" onclick="abrirLightbox(this.src)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan1_zdp6ea.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan2_zxjsza.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan3_lv9n5g.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan4_mjgxnc.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351125/evento_Luan5_ceo66g.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351126/evento_Luan6_lhxoxb.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
     </main>
@@ -607,36 +700,36 @@
         <div id="ensaio-bruna" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Sessão: Luz e Brilho</h3>
             <div class="linha-6-fotos">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna1_xq8lov.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna2_jgq1qk.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna3_frhui9.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna4_sjxyw7.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna5_rxrccy.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Bruna6_tduevn.jpg" onclick="abrirLightbox(this.src)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna1_xq8lov.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna2_jgq1qk.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna3_frhui9.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna4_sjxyw7.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Bruna5_rxrccy.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Bruna6_tduevn.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
 
         <div id="ensaio-luan-arte" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Sessão: Preto e Branco</h3>
             <div class="linha-6-fotos">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan1_otiaww.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan2_zdscyh.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan3_exfdki.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan4_mvcpkf.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Luan5_nnpvbq.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Luan6_ydnhpk.jpg" onclick="abrirLightbox(this.src)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan1_otiaww.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan2_zdscyh.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan3_exfdki.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Luan4_mvcpkf.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Luan5_nnpvbq.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Luan6_ydnhpk.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
 
         <div id="ensaio-ragira" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Sessão: Estrela</h3>
             <div class="linha-6-fotos">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Ragira1_btpbiv.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Ragira2_awb9dh.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Ragira3_wch2ef.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Ragira4_gealqc.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Ragira5_jrzykf.jpg" onclick="abrirLightbox(this.src)">
-                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Ragira6_w1zsow.jpg" onclick="abrirLightbox(this.src)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Ragira1_btpbiv.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351122/artistico_Ragira2_awb9dh.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Ragira3_wch2ef.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Ragira4_gealqc.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Ragira5_jrzykf.jpg" onclick="abrirLightbox(this)">
+                <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/v1780351123/artistico_Ragira6_w1zsow.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
     </main>
@@ -649,37 +742,41 @@
         <div id="ensaio-ecom1" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Produto: A</h3>
             <div class="linha-6-fotos">
-                <img src="ecommerce1.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce2.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce3.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce1.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce2.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce3.jpg" onclick="abrirLightbox(this.src)">
+                <img src="ecommerce1.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce2.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce3.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce1.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce2.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce3.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
 
         <div id="ensaio-ecom2" class="bloco-ensaio">
             <h3 class="subtitulo-ensaio">Produto: B</h3>
             <div class="linha-6-fotos">
-                <img src="ecommerce2.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce1.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce3.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce2.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce1.jpg" onclick="abrirLightbox(this.src)">
-                <img src="ecommerce3.jpg" onclick="abrirLightbox(this.src)">
+                <img src="ecommerce2.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce1.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce3.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce2.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce1.jpg" onclick="abrirLightbox(this)">
+                <img src="ecommerce3.jpg" onclick="abrirLightbox(this)">
             </div>
         </div>
     </main>
 
-    <!-- Lightbox (Pop-up de Tela Cheia) -->
+    <!-- Lightbox (Pop-up com Navegação) -->
     <div id="meuLightbox" class="lightbox">
         <span class="fechar" onclick="fecharLightbox()">&times;</span>
-        <img class="lightbox-img" id="imgExpandida">
+        <div class="lightbox-conteudo">
+            <button class="seta-lightbox esquerda" onclick="mudarFotoLightbox(-1, event)">&#10094;</button>
+            <img class="lightbox-img" id="imgExpandida" onclick="event.stopPropagation()">
+            <button class="seta-lightbox direita" onclick="mudarFotoLightbox(1, event)">&#10095;</button>
+        </div>
     </div>
 
     <!-- SCRIPTS DE NAVEGAÇÃO E INTERATIVIDADE -->
     <script>
-        // Função para alternar entre as abas principais no Menu
+        // --- 1. NAVEGAÇÃO DE ABAS ---
         function abrirAba(idAba, linkClicado) {
             document.querySelectorAll('.aba-conteudo').forEach(aba => {
                 aba.classList.remove('ativa');
@@ -695,7 +792,6 @@
                 document.querySelectorAll('.nav-lados a').forEach(link => {
                     link.classList.remove('menu-ativo');
                 });
-                // Garante que o link "Home" fique ativo quando clicamos na logo
                 if (idAba === 'aba-home') {
                     document.querySelector('.nav-esquerda a:first-child').classList.add('menu-ativo');
                 }
@@ -703,7 +799,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Função mágica para abrir a categoria exata
         function irParaEnsaio(idCategoria, idEnsaio) {
             abrirAba(idCategoria, null);
             setTimeout(() => {
@@ -715,24 +810,119 @@
             }, 100);
         }
 
-        // Funções do Pop-up da foto
-        function abrirLightbox(caminhoDaImagem) {
+        // --- 2. LÓGICA DO SLIDER DA HOME ---
+        let indiceSlide = 0;
+        let timerSlide;
+
+        function mostrarSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.dot');
+            if (slides.length === 0) return;
+
+            if (n >= slides.length) indiceSlide = 0;
+            if (n < 0) indiceSlide = slides.length - 1;
+
+            slides.forEach(slide => slide.classList.remove('ativa'));
+            dots.forEach(dot => dot.classList.remove('ativo'));
+
+            slides[indiceSlide].classList.add('ativa');
+            dots[indiceSlide].classList.add('ativo');
+        }
+
+        function mudarSlide(n) {
+            indiceSlide += n;
+            mostrarSlide(indiceSlide);
+            reiniciarTimerSlide();
+        }
+
+        function irParaSlide(n) {
+            indiceSlide = n;
+            mostrarSlide(indiceSlide);
+            reiniciarTimerSlide();
+        }
+
+        function reiniciarTimerSlide() {
+            clearInterval(timerSlide);
+            timerSlide = setInterval(() => mudarSlide(1), 5000); // Muda a cada 5 segundos
+        }
+
+        // --- 3. LÓGICA DO LIGHTBOX COM GALERIA ---
+        let fotosLightboxAtuais = [];
+        let indiceFotoAtual = 0;
+
+        function abrirLightbox(elementoClicado) {
+            // Descobre qual grupo de fotos foi clicado
+            const containerPai = elementoClicado.closest('.linha-6-fotos');
+            
+            if (containerPai) {
+                // Pega todas as fotos daquele ensaio específico
+                fotosLightboxAtuais = Array.from(containerPai.querySelectorAll('img'));
+                indiceFotoAtual = fotosLightboxAtuais.indexOf(elementoClicado);
+            } else {
+                // Caso clique em uma foto isolada
+                fotosLightboxAtuais = [elementoClicado];
+                indiceFotoAtual = 0;
+            }
+
+            atualizarImagemLightbox();
             document.getElementById("meuLightbox").style.display = "flex";
-            document.getElementById("imgExpandida").src = caminhoDaImagem;
+            document.body.style.overflow = "hidden"; // Impede rolagem do fundo
+        }
+
+        function mudarFotoLightbox(n, event) {
+            if (event) event.stopPropagation(); // Impede que o clique feche o lightbox
+            
+            indiceFotoAtual += n;
+            
+            // Lógica de Loop (se passar da última, volta pra primeira)
+            if (indiceFotoAtual >= fotosLightboxAtuais.length) {
+                indiceFotoAtual = 0;
+            } else if (indiceFotoAtual < 0) {
+                indiceFotoAtual = fotosLightboxAtuais.length - 1;
+            }
+            
+            atualizarImagemLightbox();
+        }
+
+        function atualizarImagemLightbox() {
+            const imgEl = document.getElementById("imgExpandida");
+            imgEl.style.opacity = 0; // Efeito de transição suave
+            
+            setTimeout(() => {
+                imgEl.src = fotosLightboxAtuais[indiceFotoAtual].src;
+                imgEl.style.opacity = 1;
+            }, 150);
         }
 
         function fecharLightbox() {
             document.getElementById("meuLightbox").style.display = "none";
+            document.body.style.overflow = "auto"; // Volta a rolagem do fundo
         }
 
+        // Clicar fora da foto fecha o lightbox
         document.getElementById("meuLightbox").addEventListener("click", function(evento) {
-            if (evento.target === this) {
-                fecharLightbox();
+            fecharLightbox();
+        });
+
+        // Suporte a teclado (ESC para fechar, Setas para navegar)
+        document.addEventListener('keydown', function(event) {
+            if (document.getElementById("meuLightbox").style.display === "flex") {
+                if (event.key === "Escape") fecharLightbox();
+                if (event.key === "ArrowRight") mudarFotoLightbox(1);
+                if (event.key === "ArrowLeft") mudarFotoLightbox(-1);
             }
         });
 
-        // --- OBSERVAÇÃO DE SCROLL PARA ANIMAÇÕES (Intersection Observer) ---
+        // --- 4. INICIALIZAÇÃO E ANIMAÇÕES DE SCROLL ---
         document.addEventListener('DOMContentLoaded', function() {
+            // Inicia o Slider
+            mostrarSlide(indiceSlide);
+            reiniciarTimerSlide();
+
+            // Marca a Home como ativa no menu
+            document.querySelector('.nav-esquerda a:first-child').classList.add('menu-ativo');
+
+            // Inicia o observador de Scroll
             const observador = new IntersectionObserver((entradas) => {
                 entradas.forEach((entrada) => {
                     if (entrada.isIntersecting) {
@@ -740,19 +930,14 @@
                         observador.unobserve(entrada.target); 
                     }
                 });
-            }, { 
-                threshold: 0.15 
-            });
+            }, { threshold: 0.15 });
 
-            const elementosParaAnimar = document.querySelectorAll('.cartao-ensaio, .linha-6-fotos img, .sobre-mim-conteudo, .btn-contato, .sequencia-home img');
-
+            // Anima apenas o portfólio e sobre mim
+            const elementosParaAnimar = document.querySelectorAll('.cartao-ensaio, .linha-6-fotos img, .sobre-mim-conteudo, .btn-contato');
             elementosParaAnimar.forEach((elemento) => {
                 elemento.classList.add('elemento-oculto');
                 observador.observe(elemento);
             });
-            
-            // Marca a Home como ativa ao carregar a página inicialmente
-            document.querySelector('.nav-esquerda a:first-child').classList.add('menu-ativo');
         });
     </script>
 </body>
