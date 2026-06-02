@@ -20,6 +20,8 @@
             background-color: #121212; 
             color: #E0E0E0;
             
+            /* --- TEXTURA DE FUNDO (Efeito Granulado/Film Grain) --- */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
         }
         
         /* --- NOVO CABEÇALHO DIVIDIDO (SPLIT NAV) --- */
@@ -73,14 +75,12 @@
             text-align: center;
         }
 
-        /* O tamanho da sua logo quando você adicionar a imagem */
         .logo-centro img {
             height: 80px; 
             width: auto;
             object-fit: contain;
         }
 
-        /* Título alternativo caso a logo demore a carregar */
         .logo-texto-fallback {
             font-family: 'Playfair Display', serif;
             font-size: 2em;
@@ -91,7 +91,7 @@
 
         /* --- SISTEMA DE ABAS --- */
         .aba-conteudo {
-            display: none; /* Esconde todas as abas por padrão */
+            display: none; 
             padding: 40px 20px 100px 20px;
             max-width: 1500px;
             margin: 0 auto;
@@ -99,7 +99,7 @@
         }
 
         .aba-conteudo.ativa {
-            display: block; /* Mostra apenas a aba com a classe 'ativa' */
+            display: block; 
         }
 
         @keyframes fadeIn {
@@ -117,25 +117,34 @@
             color: #FFFFFF;
         }
 
-        /* --- ABA HOME (SEQUÊNCIA) --- */
+        /* --- ABA HOME (SEQUÊNCIA EM GRADE) --- */
         .sequencia-home {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            max-width: 900px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+            gap: 0; /* Sem margem entre elas */
+            max-width: 1200px;
             margin: 0 auto;
         }
         
         .sequencia-home img {
             width: 100%;
-            height: auto;
-            border-radius: 2px;
+            height: 100%;
+            min-height: 400px;
+            object-fit: cover; /* Garante que a foto não distorça */
+            display: block;
+            border-radius: 0; /* Bordas retas para grudarem perfeitamente */
             filter: grayscale(10%);
             transition: filter 0.4s ease;
         }
 
         .sequencia-home img:hover {
             filter: grayscale(0%);
+        }
+
+        /* Se tiver um número ímpar de fotos, a última ocupa as duas colunas */
+        .sequencia-home img:last-child:nth-child(odd) {
+            grid-column: span 2;
+            min-height: 500px; /* Deixa a foto destaque um pouco maior */
         }
 
         /* --- ABA PORTFÓLIO (CAPAS) --- */
@@ -193,7 +202,6 @@
             margin-bottom: 20px;
         }
 
-        /* As 6 fotos em uma única linha */
         .linha-6-fotos {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
@@ -215,7 +223,6 @@
             position: relative;
         }
 
-        /* Botão voltar nas categorias */
         .btn-voltar {
             background: none;
             border: none;
@@ -295,7 +302,6 @@
             .nav-container { gap: 20px; }
             .nav-lados { gap: 15px; }
             
-            /* Adaptação das 6 fotos para celular (Cria scroll lateral horizontal) */
             .linha-6-fotos {
                 display: flex;
                 overflow-x: auto;
@@ -303,7 +309,7 @@
                 padding-bottom: 15px;
             }
             .linha-6-fotos img {
-                flex: 0 0 85%; /* Ocupa 85% da tela, deixando a ponta da próxima visível */
+                flex: 0 0 85%; 
                 scroll-snap-align: center;
             }
         }
@@ -313,6 +319,10 @@
             .nav-esquerda, .nav-direita { justify-content: center; width: 100%; }
             .logo-centro img { height: 60px; }
             
+            /* No celular a home volta a ser 1 por linha para a foto não ficar pequena */
+            .sequencia-home { grid-template-columns: 1fr; }
+            .sequencia-home img:last-child:nth-child(odd) { grid-column: span 1; }
+
             .sobre-mim-conteudo {
                 flex-direction: column;
                 text-align: center;
@@ -358,26 +368,26 @@
             transition: color 0.3s;
         }
         
+        .fechar:hover { color: #A0A0A0; }
+
         /* --- EFEITO DE REVELAÇÃO NO SCROLL --- */
         .elemento-oculto {
             opacity: 0;
-            transform: translateY(40px); /* Começa 40px mais para baixo */
+            transform: translateY(40px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
         .elemento-mostrar {
             opacity: 1;
-            transform: translateY(0); /* Volta para a posição original */
+            transform: translateY(0); 
         }
         
-        /* Atraso em cascata para as fotos em linha (efeito dominó) */
         .linha-6-fotos img:nth-child(1) { transition-delay: 0.1s; }
         .linha-6-fotos img:nth-child(2) { transition-delay: 0.2s; }
         .linha-6-fotos img:nth-child(3) { transition-delay: 0.3s; }
         .linha-6-fotos img:nth-child(4) { transition-delay: 0.4s; }
         .linha-6-fotos img:nth-child(5) { transition-delay: 0.5s; }
         .linha-6-fotos img:nth-child(6) { transition-delay: 0.6s; }
-        .fechar:hover { color: #A0A0A0; }
         
     </style>
 </head>
@@ -388,8 +398,8 @@
         <nav class="nav-container">
             <!-- Lado Esquerdo -->
             <div class="nav-lados nav-esquerda">
-                <a href="#" onclick="abrirAba('aba-home', this)">Home</a>
-                <a href="#" onclick="abrirAba('aba-portfolio', this)" class="menu-ativo">Portfólio</a>
+                <a href="#" onclick="abrirAba('aba-home', this)" class="menu-ativo">Home</a>
+                <a href="#" onclick="abrirAba('aba-portfolio', this)">Portfólio</a>
             </div>
             
             <!-- Centro (LOGO) -->
@@ -406,8 +416,8 @@
         </nav>
     </header>
 
-    <!-- ABA 1: HOME (Sequência de Fotos) -->
-    <main id="aba-home" class="aba-conteudo">
+    <!-- ABA 1: HOME (Sequência de Fotos em Grade) -->
+    <main id="aba-home" class="aba-conteudo ativa">
         <div class="sequencia-home">
             <!-- Substitua pelas fotos preferidas da sua sequência -->
             <img src="https://res.cloudinary.com/dkz3vkjsw/image/upload/q_auto/f_auto/v1780366829/Brunin_-_2_swnyeg.png" alt="Destaque 1">
@@ -419,7 +429,7 @@
     </main>
 
     <!-- ABA 2: PORTFÓLIO (Grade de Capas) -->
-    <main id="aba-portfolio" class="aba-conteudo ativa">
+    <main id="aba-portfolio" class="aba-conteudo">
             <div class="grid-portifolio">
             
             <!-- Capas de Retratos -->
@@ -671,39 +681,34 @@
     <script>
         // Função para alternar entre as abas principais no Menu
         function abrirAba(idAba, linkClicado) {
-            // Esconde todas as abas
             document.querySelectorAll('.aba-conteudo').forEach(aba => {
                 aba.classList.remove('ativa');
             });
-            // Mostra a aba desejada
             document.getElementById(idAba).classList.add('ativa');
 
-            // Atualiza a marcação no menu (remove 'ativo' de todos e coloca no clicado)
             if (linkClicado) {
                 document.querySelectorAll('.nav-lados a').forEach(link => {
                     link.classList.remove('menu-ativo');
                 });
                 linkClicado.classList.add('menu-ativo');
             } else {
-                // Se o clique veio da logo, limpa todas as marcações do menu
                 document.querySelectorAll('.nav-lados a').forEach(link => {
                     link.classList.remove('menu-ativo');
                 });
+                // Garante que o link "Home" fique ativo quando clicamos na logo
+                if (idAba === 'aba-home') {
+                    document.querySelector('.nav-esquerda a:first-child').classList.add('menu-ativo');
+                }
             }
-
-            // Rola a tela suavemente para o topo
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Função mágica para abrir a categoria exata e rolar até o ensaio escolhido
+        // Função mágica para abrir a categoria exata
         function irParaEnsaio(idCategoria, idEnsaio) {
             abrirAba(idCategoria, null);
-            
-            // Pequeno delay (100 milissegundos) para o navegador "desenhar" a tela nova antes de rolar
             setTimeout(() => {
                 const elemento = document.getElementById(idEnsaio);
                 if (elemento) {
-                    // Puxa a tela para a altura do nome do ensaio, descontando o tamanho do cabeçalho fixo
                     const y = elemento.getBoundingClientRect().top + window.scrollY - 120;
                     window.scrollTo({ top: y, behavior: 'smooth' });
                 }
@@ -725,30 +730,29 @@
                 fecharLightbox();
             }
         });
+
         // --- OBSERVAÇÃO DE SCROLL PARA ANIMAÇÕES (Intersection Observer) ---
         document.addEventListener('DOMContentLoaded', function() {
-            // Cria o observador
             const observador = new IntersectionObserver((entradas) => {
                 entradas.forEach((entrada) => {
-                    // Se o elemento entrou na tela
                     if (entrada.isIntersecting) {
                         entrada.target.classList.add('elemento-mostrar');
-                        // Para de observar depois que já apareceu (opcional)
                         observador.unobserve(entrada.target); 
                     }
                 });
             }, { 
-                threshold: 0.15 // Dispara quando 15% do elemento estiver visível
+                threshold: 0.15 
             });
 
-            // Seleciona tudo que queremos animar (capas, fotos individuais, textos e botões)
             const elementosParaAnimar = document.querySelectorAll('.cartao-ensaio, .linha-6-fotos img, .sobre-mim-conteudo, .btn-contato, .sequencia-home img');
 
-            // Adiciona a classe 'oculto' e manda o observador vigiar cada um
             elementosParaAnimar.forEach((elemento) => {
                 elemento.classList.add('elemento-oculto');
                 observador.observe(elemento);
             });
+            
+            // Marca a Home como ativa ao carregar a página inicialmente
+            document.querySelector('.nav-esquerda a:first-child').classList.add('menu-ativo');
         });
     </script>
 </body>
